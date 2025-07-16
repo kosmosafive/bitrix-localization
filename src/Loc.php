@@ -30,7 +30,10 @@ class Loc
         $message = BaseLoc::getMessage($code, $replace, $language);
         if ($message === null) {
             $defaultLanguage ??= static::getDefaultLanguage();
-            $message = BaseLoc::getMessage($code, $replace, $defaultLanguage);
+
+            if ($defaultLanguage !== $language) {
+                $message = BaseLoc::getMessage($code, $replace, $defaultLanguage);
+            }
         }
 
         return $message;
