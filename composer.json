@@ -1,7 +1,7 @@
 {
   "name": "kosmosafive/bitrix-localization",
   "description": "Kosmos: Bitrix Localization",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "homepage": "https://github.com/kosmosafive/bitrix-localization",
   "type": "library",
   "minimum-stability": "stable",
