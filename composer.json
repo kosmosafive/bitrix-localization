@@ -24,5 +24,10 @@
   },
   "require-dev": {
     "friendsofphp/php-cs-fixer": "^3.82"
+  },
+  "autoload": {
+    "psr-4": {
+      "Kosmos\\Bitrix\\Localization\\": "src/"
+    }
   }
 }
