@@ -7,6 +7,16 @@ namespace Kosmos\Bitrix\Localization;
 use Bitrix\Main\Localization\Loc as BaseLoc;
 use Bitrix\Main\Config\Configuration;
 
+/**
+ * @method static void loadMessages(string $file)
+ * @method static string getCurrentLang()
+ * @method static void setCurrentLang(string $language)
+ * @method static array loadLanguageFile(string $file, string $language = null, bool $normalize = true)
+ * @method static void loadCustomMessages(string $file, ?string $language = null)
+ * @method static string getDefaultLang(string $lang)
+ * @method static array getIncludedFiles()
+ * @method static int getPluralForm($value, ?string $language = '') *
+ */
 class Loc
 {
     protected static ?string $defaultLanguage = null;
@@ -42,10 +52,30 @@ class Loc
     protected static function getDefaultLanguage(): ?string
     {
         if (static::$defaultLanguage === null) {
-            $config = Configuration::getValue('localization');
-            static::$defaultLanguage = $config['defaultLanguage'] ?: 'ru';
+            $configValue = Configuration::getValue('default_language');
+            static::$defaultLanguage = $configValue ?: 'ru';
         }
 
         return static::$defaultLanguage;
+    }
+
+    public static function getMessagePlural(
+        string $code,
+        int $value,
+        ?array $replace = null,
+        ?string $language = null,
+        ?string $defaultLanguage = null
+    ): ?string
+    {
+        $message = BaseLoc::getMessagePlural($code, $value, $replace, $language);
+        if ($message === null) {
+            $defaultLanguage ??= static::getDefaultLanguage();
+
+            if ($defaultLanguage !== $language) {
+                $message = BaseLoc::getMessagePlural($code, $value, $replace, $language);
+            }
+        }
+
+        return $message;
     }
 }
