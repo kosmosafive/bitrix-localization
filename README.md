@@ -6,14 +6,12 @@
 
 Конфигурацию рекомендуется указывать в файле /bitrix/.settings_extra.php.
 
-* _defaultLanguage_ — (опционально) язык по умолчанию.
+* _default_language_ — (опционально) язык по умолчанию.
 
 ```php
 return [
-    'localization' => [
-        'value' => [
-            'defaultLanguage' => 'ru',
-        ],
+    'default_language' => [
+        'value' => 'ru',
     ],
 ];
 ```
