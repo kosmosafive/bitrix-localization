@@ -67,13 +67,25 @@ class Loc
         ?string $defaultLanguage = null
     ): ?string
     {
-        $message = BaseLoc::getMessagePlural($code, $value, $replace, $language);
+        $language = (string) $language;
+        if ($language === '') {
+            $language = LANGUAGE_ID;
+        }
+
+        $message = self::getMessage($code . '_PLURAL_' . self::getPluralForm($value, $language), $replace, $language);
+
         if ($message === null) {
+            $message = self::getMessage($code . '_PLURAL_1', $replace, $language);
+        }
+
+        if ($message === null) {
+
             $defaultLanguage ??= static::getDefaultLanguage();
 
             if ($defaultLanguage !== $language) {
-                $message = BaseLoc::getMessagePlural($code, $value, $replace, $defaultLanguage);
+                $message = static::getMessagePlural($code, $value, $replace, $defaultLanguage);
             }
+
         }
 
         return $message;
