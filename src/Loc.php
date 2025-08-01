@@ -72,7 +72,7 @@ class Loc
             $defaultLanguage ??= static::getDefaultLanguage();
 
             if ($defaultLanguage !== $language) {
-                $message = BaseLoc::getMessagePlural($code, $value, $replace, $language);
+                $message = BaseLoc::getMessagePlural($code, $value, $replace, $defaultLanguage);
             }
         }
 
