@@ -72,10 +72,10 @@ class Loc
             $language = LANGUAGE_ID;
         }
 
-        $message = self::getMessage($code . '_PLURAL_' . self::getPluralForm($value, $language), $replace, $language);
+        $message = self::getMessage($code . '_PLURAL_' . self::getPluralForm($value, $language), $replace, $language, $language);
 
         if ($message === null) {
-            $message = self::getMessage($code . '_PLURAL_1', $replace, $language);
+            $message = self::getMessage($code . '_PLURAL_1', $replace, $language, $language);
         }
 
         if ($message === null) {
@@ -83,7 +83,11 @@ class Loc
             $defaultLanguage ??= static::getDefaultLanguage();
 
             if ($defaultLanguage !== $language) {
-                $message = static::getMessagePlural($code, $value, $replace, $defaultLanguage);
+                $message = self::getMessage($code . '_PLURAL_' . self::getPluralForm($value, $defaultLanguage), $replace, $defaultLanguage, $defaultLanguage);
+
+                if ($message === null) {
+                    $message = self::getMessage($code . '_PLURAL_1', $replace, $defaultLanguage, $defaultLanguage);
+                }
             }
 
         }
